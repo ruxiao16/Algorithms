@@ -62,7 +62,7 @@ public class BfsAdjacencyListIterative {
 				if (!visited[neighbor]) {
 					visited[neighbor] = true;
 					// this keeps track what the previous node is. It is possible that multiple nodes
-					// can arrive here but it does matter as visited node won't be visited again
+					// can arrive here but it does not matter as visited node won't be visited again
 					// ex. prev[1] = 10 meaning we arrive node 1 from node 10
 					prev[neighbor] = node;
 					queue.offer(neighbor);

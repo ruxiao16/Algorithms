@@ -20,7 +20,9 @@
 package com.xiao.algorithms.graphtheory;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 public class BfsShortestPathGrid {
 	private final static char START = 'S';
@@ -42,6 +44,11 @@ public class BfsShortestPathGrid {
 	int nodesLeftInLayer = 1;
 	int nodesInNextLayer = 0;
 
+	// use to backtrack and reconstruct path
+	int[] prev;
+	int exitRow = -1;
+	int exitCol = -1;
+
 	BfsShortestPathGrid(char[][] maze, int startingRow, int startingCol) {
 		numOfRows = maze.length;
 		if (numOfRows == 0) {
@@ -57,9 +64,8 @@ public class BfsShortestPathGrid {
 		rowQueue = new ArrayDeque<>();
 		colQueue = new ArrayDeque<>();
 		visited = new boolean[numOfRows][numOfCols];
+		prev = new int[numOfCols* numOfRows];
 	}
-
-
 
 	private int solve() {
 		boolean reachedEnd = false;
@@ -75,6 +81,8 @@ public class BfsShortestPathGrid {
 
 			if (maze[row][col] == EXIT) {
 				reachedEnd = true;
+				exitRow = row;
+				exitCol = col;
 				break;
 			}
 			exploreNeighbors(row, col);
@@ -88,8 +96,38 @@ public class BfsShortestPathGrid {
 				numOfMoves++;
 			}
 		}
-		if (reachedEnd) return numOfMoves;
+		if (reachedEnd) {
+			reconstructPath();
+			return numOfMoves;
+		}
+
 		return -1;
+	}
+
+	private void reconstructPath() {
+		int exitIdx = exitRow*numOfCols + exitCol;
+		List<Integer> rowList = new ArrayList<>();
+		List<Integer> colList = new ArrayList<>();
+
+		rowList.add(exitIdx/numOfCols);
+		colList.add(exitIdx%numOfCols);
+		// TODO
+		// here 0 represent the starting and ending index, we should probably
+		// initialize the whole array to -1, and only mark the starting point as 0
+		// we should also store starting row and column as global variable
+		while (exitIdx != 0) {
+			// exitIdx = 4*7+3 = 31
+			// exitIdx = prev[31] = 32  -> row = 32/7 = 4; col = 32%7 = 4
+			// exitIdx = prev[32] = 25  -> row = 25/7 = 3; col = 25%7 = 4
+			exitIdx = prev[exitIdx];
+			rowList.add(exitIdx/numOfCols);
+			colList.add(exitIdx%numOfCols);
+		}
+
+		for (int i = rowList.size()-1 ; i >= 0; i--) {
+			System.out.print(rowList.get(i) + "," + colList.get(i) + " -> ");
+		}
+		System.out.println();
 	}
 
 	private void exploreNeighbors(int row, int col) {
@@ -107,21 +145,28 @@ public class BfsShortestPathGrid {
 
 			rowQueue.offer(newRow);
 			colQueue.offer(newCol);
+
+			// instead of maintaining a 2 d matrix, we use a 1d array prev to capture
+			// where the previous node is. For example, the grid is 5x7, then moving from
+			// (0,2) to (1,2), we map the cell (1,2) as the  1*7+2 = 9th index on the 1 d array,
+			// and it will have a value of 0*7+2 = 2, meaning to arrive node 9, it is from node 2.
+			prev[newRow*numOfCols + newCol] = row*numOfCols + col;
 			visited[newRow][newCol] = true;
 			nodesInNextLayer ++;
 		}
 	}
 	public static void main(String[] args) {
 		char[][] maze = generateMap();
-		BfsShortestPathGrid solver = new BfsShortestPathGrid(maze, 0, 2);
+		BfsShortestPathGrid solver = new BfsShortestPathGrid(maze, 0, 0);
 		int moveCnt = solver.solve();
 		System.out.println("number of moves " + moveCnt);
+		solver.printPrev();
 	}
 	private static char[][] generateMap() {
 		char[][] arr = new char[5][7];
-		arr[0][0] = CAN_PASS;
+		arr[0][0] = START;
 		arr[0][1] = CAN_PASS;
-		arr[0][2] = START;
+		arr[0][2] = CAN_PASS;
 		arr[0][3] = NO_PASS;
 		arr[0][4] = CAN_PASS;
 		arr[0][5] = CAN_PASS;
@@ -171,5 +216,12 @@ public class BfsShortestPathGrid {
 			}
 			System.out.println();
 		}
+	}
+
+	private void printPrev() {
+		for (int value: prev) {
+			System.out.print(value + " ");
+		}
+		System.out.println();
 	}
 }
