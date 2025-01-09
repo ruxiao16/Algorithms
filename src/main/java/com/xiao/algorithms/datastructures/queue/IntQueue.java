@@ -26,6 +26,7 @@ public class IntQueue implements Queue<Integer> {
 		data[end++] = value;
 		size++;
 		end = end % data.length; // this reset the end to zero-> first entry, when the last spot is taken
+		// so if the size is 3 and there are already 2 items, offer(88) will increment end to 3, and end = 3%3 = 0
 	}
 
 	@Override

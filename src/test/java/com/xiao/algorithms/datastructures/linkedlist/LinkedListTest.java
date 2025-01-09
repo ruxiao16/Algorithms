@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.xiao.algorithms.linkedlist.DoublyLinkedList;
-
 public class LinkedListTest {
 	private static final int LOOPS = 10000;
 	private static final int TEST_SZ = 400;

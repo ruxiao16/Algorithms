@@ -1,4 +1,4 @@
-package com.xiao.algorithms.linkedlist;
+package com.xiao.algorithms.datastructures.linkedlist;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -168,7 +168,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
 //		node1.next = node2;
 //		node2.prev = node1;
 
-		//Make teh pointers of adjacent nodes kip over 'node'
+		//Make the pointers of adjacent nodes kip over 'node'
 		node.next.prev = node.prev;
 		node.prev.next = node.next;
 
