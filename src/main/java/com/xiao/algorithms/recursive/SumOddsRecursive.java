@@ -36,6 +36,8 @@ public class SumOddsRecursive {
 	private static Integer product;
 
 	public static int productEvens(int[] arr) {
+		// clear product
+		product = null;
 		product = productEvens(0, arr);
 		// handles both when arr is empty or null
 		if (product == null) {
