@@ -126,6 +126,8 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
 			// Case: only a right subtree or no subtree at all.
 			// Swap the node we wish to remove with its right child--> successor
+			// Note, for the case when the node has no subtree at all, we simply just return null to the parent node -> which
+			// is the same as removing the current node
 			if (node.left == null) {
 				// basically the right node of the removed node becomes the new
 				// right node of the removed node's parent node
@@ -155,7 +157,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 				// Go in the left subtree and remove the rightmost node we found and swapped data with.
 				// note that this will fall into one of the first two conditions right away because
 				// this rightmost node will have at most one child (one subtree)
-				node.right = remove(node.left, tmp.data);
+				node.left = remove(node.left, tmp.data);
 			}
 		}
 		return node;
