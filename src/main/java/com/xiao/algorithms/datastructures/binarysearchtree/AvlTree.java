@@ -192,5 +192,68 @@ public class AvlTree<T extends Comparable<T>> {
 		return newParent;
 	}
 
+	private boolean remove(T elem) {
+		if (elem == null) return false;
 
+		if (contains(root, elem)) {
+			root = remove(root, elem);
+			nodeCount--;
+			return true;
+		}
+		return false;
+	}
+
+	// the impl is the same as what is BinarySearchTree, the only difference is the update and rebalance
+	private Node remove(Node node, T elem) {
+		if (node == null) return null;
+
+		int cmp = elem.compareTo(node.value);
+
+		// left subtree, value we are looking for is smaller than the current value
+		if (cmp < 0) {
+			node.left = remove(node.left, elem);
+		} else if (cmp > 0) {
+			node.right = remove(node.right, elem);
+		} else {
+			// only a right subtree or no subtree at all. We just swap the node we wish to remove
+			// with the right child
+			if (node.left == null) {
+				return node.right;
+			} else if (node.right == null) {
+				return node.left;
+			} else {
+				// two subtrees, as a heuristic, we will remove from the subtree with the greatest height in hope that this may help with rebalancing
+				if (node.left.height > node.right.height) {
+					// Swap the value of the successor into the node
+					T successorVal = findMax(node.left);
+					node.value = successorVal;
+
+					// remove the duplicate, note that this will fall into one of the 3 case eventually, no subtree or one subtree
+					node.left = remove(node.left, successorVal);
+				} else {
+					T successorVal = findMin(node.right);
+					node.value = successorVal;
+
+					node.right = remove(node.right, successorVal);
+				}
+			}
+		}
+
+		update(node); // update bf and height value
+		return balance(node);
+	}
+
+	private T findMin(Node node) {
+		while (node.left != null) {
+			node = node.left;
+		}
+		return node.value;
+	}
+
+	private T findMax(Node node) {
+		while (node.right != null) {
+			node = node.right;
+		}
+		return node.value;
+	}
 }
