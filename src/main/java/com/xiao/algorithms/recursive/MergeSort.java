@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 public class MergeSort {
 
-
-
 	public static void main(String[] args) {
 		int[] testArr = new int[] {9, 7, 5, 6, 2, 4};
 		System.out.println(Arrays.toString(mergeSort(testArr)));
@@ -43,7 +41,7 @@ public class MergeSort {
 		int l = 0;
 		int r = 0;
 		int[] result = new int[left.length + right.length];
-		int i = 0;
+		int i = 0;// keep track of where we are in the merged arr
 		while (l < left.length || r < right.length) {
 			// reach the end of left array, add rest of the right array
 			if (l == left.length) {

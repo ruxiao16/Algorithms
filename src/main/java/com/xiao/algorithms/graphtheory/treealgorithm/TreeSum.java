@@ -26,7 +26,7 @@ public class TreeSum {
 		}
 	}
 
-	public static int treeSum(TreeNode node) {
+	public static int leafSum(TreeNode node) {
 		if (node == null) return 0; // empty tree
 		if (node.getChildren().isEmpty()) {
 			return node.value;
@@ -34,13 +34,27 @@ public class TreeSum {
 		int sum = 0;
 		// dfs
 		for (TreeNode eachChild: node.getChildren()) {
+			sum += leafSum(eachChild);
+		}
+		return sum;
+	}
+
+	public static int treeSum(TreeNode node) {
+		if (node == null) return 0;
+		if (node.getChildren().isEmpty()) return node.value;
+
+		int sum = node.value;
+
+		for (TreeNode eachChild: node.getChildren()) {
 			sum += treeSum(eachChild);
 		}
 		return sum;
 	}
 
+
 	public static void main(String[] args) {
 		TreeNode root = makeTree();
+		System.out.printf("Leaf sum: %d\n", leafSum(root));
 		System.out.printf("Tree sum: %d\n", treeSum(root));
 	}
 

@@ -4,14 +4,14 @@ public class SumOddsRecursive {
 
 	public static void main(String[] args) {
 		int[] arr = {2, 5, 4, 7, 3};
-		int result = sumOdds( arr);
+		int result = sumOdds(arr);
 		System.out.println(result);
 
-		int[] oddOnlyArr = {1 , 7, 3};
+		int[] oddOnlyArr = {1, 7, 3};
 		result = productEvens(oddOnlyArr);
 		System.out.println(result);
 
-		int[] oddAndEvenArr = {1 , 2, 3, 4, 5};
+		int[] oddAndEvenArr = {1, 2, 3, 4, 5};
 		result = productEvens(oddAndEvenArr);
 		System.out.println(result);
 	}
@@ -51,6 +51,7 @@ public class SumOddsRecursive {
 			return null;
 		}
 		// we use index + 1 here because ++index will have impact on the unwinding part
+		// as during unwinding, it is import to have index and not index + 1
 		product = productEvens(index+1, arr);
 		// recursion begins to unwind
 

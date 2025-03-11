@@ -14,7 +14,7 @@ public class TreeCenter {
 
 		// find all leaf nodes
 		List<Integer> leaves = new ArrayList<>();
-		for (int i = 0; i < n; i ++) {
+		for (int i = 0; i < n; i++) {
 			// tree.get(i).size() returns number of connected nodes
 			// 1 means a leaf node, only connect to another node, has to be a leaf node
 			degree[i] = tree.get(i).size();
@@ -43,6 +43,7 @@ public class TreeCenter {
 				// remove a leaf node
 				degree[node] = 0;
 			}
+			// the last remaining nodes (center) will be added here as processedLeafs then while loop terminates
 			processedLeafs += newLeaves.size();
 			leaves = newLeaves;// one layer peels, replaced with the new outermost layer, with degree of 1
 		}

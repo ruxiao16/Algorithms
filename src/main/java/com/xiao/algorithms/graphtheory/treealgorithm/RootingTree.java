@@ -22,7 +22,7 @@ public class RootingTree {
 			// if current node's child is also current node's parent, then
 			// we are going back
 			TreeNode parent = node.getParent();
-			if (parent!= null && parent.getId() == childId) {
+			if (parent != null && parent.getId() == childId) {
 				continue;
 			}
 			TreeNode childNode = new TreeNode(childId, node);
