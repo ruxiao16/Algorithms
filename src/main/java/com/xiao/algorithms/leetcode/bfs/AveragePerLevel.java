@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+import com.xiao.algorithms.leetcode.TreeNode;
+
 public class AveragePerLevel {
 
 	public List<Double> avgPerLevel(TreeNode root) {
@@ -43,5 +45,14 @@ public class AveragePerLevel {
 
 	public static void main(String[] args) {
 		//test cases
+		TreeNode root = new TreeNode(1);
+		root.left = new TreeNode(2);
+		root.right = new TreeNode(3);
+		root.left.right = new TreeNode(5);
+		root.right.right = new TreeNode(4);
+
+		AveragePerLevel solution = new AveragePerLevel();
+		List<Double> result = solution.avgPerLevel(root);
+		result.forEach(System.out::println);
 	}
 }
