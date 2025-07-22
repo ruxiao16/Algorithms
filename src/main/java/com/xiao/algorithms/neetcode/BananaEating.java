@@ -16,7 +16,7 @@ public class BananaEating {
 	// the rate has to be 25 banans/hr
 
 	// h is always greater than or equals to the length of the piles
-	q// The upper bound (eating speed) for the answer equals to the value of the largets pile,
+	// The upper bound (eating speed) for the answer equals to the value of the largets pile,
 	// Then the lower bound is length of the
 	// So the solution is somewhere between   1 <= answer <= piles.max
 	// -> we can then use binary search to search this range
