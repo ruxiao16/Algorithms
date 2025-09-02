@@ -31,16 +31,29 @@ public class NumberOfIslands {
 		numOfCols = grid[0].length;
 
 		visited = new boolean[numOfRows][numOfCols];
-		rowQueue = new ArrayDeque<>();
-		colQueue = new ArrayDeque<>();
+		numberOfIsland = 0;
+		//bfs
+//		rowQueue = new ArrayDeque<>();
+//		colQueue = new ArrayDeque<>();
+//
+//		for (int i = 0; i < numOfRows; i++) {
+//			for (int j = 0; j < numOfCols; j++) {
+//				bfs(i, j, grid);
+//			}
+//		}
 
+		//dfs
 		for (int i = 0; i < numOfRows; i++) {
 			for (int j = 0; j < numOfCols; j++) {
-				bfs(i, j, grid);
+				if (grid[i][j] == '1' && !visited[i][j]) {
+					numberOfIsland++;
+					dfs(i, j, grid);
+				}
 			}
 		}
 		return numberOfIsland;
 	}
+
 
 	private void bfs(int startRow, int startCol, char[][] grid) {
 		if (grid[startRow][startCol] == '0') {
@@ -76,15 +89,38 @@ public class NumberOfIslands {
 				colQueue.add(newCol);
 			}
 		}
+		// in each iteration of bfs, we can guarantee that the whole island is visited
 		numberOfIsland++;
 	}
 
+	// the purpose of dfs is just to mark nodes as visited
+	private void dfs(int row, int col, char[][] grid) {
+		if (row < 0 || col < 0) return; // reach beyond the border
+		if (row >= numOfRows || col >= numOfCols) return;
+
+		if (grid[row][col] == '0') {
+			return;
+		}
+
+		if (visited[row][col]) {
+			return;
+		}
+
+		visited[row][col] = true;
+		dfs(row -1, col, grid);
+		dfs(row +1, col, grid);
+		dfs(row, col -1, grid);
+		dfs(row, col +1, grid);
+	}
+
 	public static void main(String[] args) {
+		NumberOfIslands driver = new NumberOfIslands();
+
 		char[][] grid = {
 				{'1','1','1','1','0'},
 				{'1','1','0','1','0'},
-				{'1','1','0','0','0'},
-				{'0','0','0','0','0'}
+				{'1','1','0','0','1'},
+				{'0','0','1','0','1'}
 		};
 
 		char[][] grid1 = {
@@ -94,8 +130,8 @@ public class NumberOfIslands {
 				{'0','0','0','0','0'}
 		};
 
+		System.out.println("num of islands are " + driver.numIslands(grid));
 
-		NumberOfIslands driver = new NumberOfIslands();
 		System.out.println("num of islands are " + driver.numIslands(grid1));
 
 	}
