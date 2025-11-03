@@ -1,4 +1,4 @@
-package com.xiao.algorithms.neetcode;
+package com.xiao.algorithms.neetcode.arrays;
 
 import java.util.Arrays;
 

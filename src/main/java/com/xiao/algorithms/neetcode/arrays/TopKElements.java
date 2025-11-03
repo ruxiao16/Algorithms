@@ -21,7 +21,7 @@ public class TopKElements {
 		}
 
 		for (int n : nums) {
-			count.put(n, count.getOrDefault(n, 0) + 1);
+			count.put(n, count.getOrDefault(n, 0) + 1); // count the freq, key -> number, val-> freq
 		}
 		for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
 			freq[entry.getValue()].add(entry.getKey());
