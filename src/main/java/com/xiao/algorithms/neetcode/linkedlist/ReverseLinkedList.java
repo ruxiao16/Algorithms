@@ -1,5 +1,7 @@
 package com.xiao.algorithms.neetcode.linkedlist;
 
+import static com.xiao.algorithms.neetcode.linkedlist.ListNode.prettyPrint;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -34,7 +36,7 @@ public class ReverseLinkedList {
 		return newHead;
 	}
 
-	// Space complexity O(1), time O(N)
+	// two pointers: Space complexity O(1), time O(N)
 	public ListNode reverseListInSpace(ListNode head) {
 		ListNode prev = null;
 		ListNode curr = head;
@@ -79,11 +81,5 @@ public class ReverseLinkedList {
 
 	}
 
-	private static void prettyPrint(ListNode head) {
-		while(head.next != null) {
-			System.out.println(head.val);
-			head = head.next;
-		}
-		System.out.println(head.val);
-	}
+
 }
