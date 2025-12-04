@@ -2,11 +2,37 @@ package com.xiao.algorithms.neetcode.trees;
 
 import static com.xiao.algorithms.neetcode.trees.TreeNode.levelOrderPrettyPrint;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class InvertBinaryTree {
 
 	public TreeNode invertTree(TreeNode root) {
-		invertTreeRecursion(root);
+//		invertTreeRecursion(root);
+		invertTreeBFS(root);
 		return root;
+	}
+
+	private void invertTreeBFS(TreeNode node) {
+		if (node == null) {
+			return;
+		}
+
+		Deque<TreeNode> queue = new ArrayDeque<>();
+		queue.push(node);
+		while (!queue.isEmpty()) {
+			TreeNode currNode = queue.pop();
+			TreeNode temp = currNode.left;
+			currNode.left = currNode.right;
+			currNode.right = temp;
+
+			if (currNode.left != null) {
+				queue.push(currNode.left);
+			}
+			if (currNode.right != null) {
+				queue.push(currNode.right);
+			}
+		}
 	}
 
 	// also a DFS
