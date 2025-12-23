@@ -57,7 +57,7 @@ public class RottingFruit {
 						continue; // we use 2 to indicate we have visited them as well beside being rotten
 					}
 
-					grid[nextRow][nextCol] = 2; // mark it as rottern, more importantly mark it as visited
+					grid[nextRow][nextCol] = 2; // mark it as rotten, more importantly mark it as visited
 					queue.add(new int[] {nextRow, nextCol});
 					freshCount--;
 					infectedSomething = true;
