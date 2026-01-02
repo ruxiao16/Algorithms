@@ -25,23 +25,13 @@ public class PrefixTree {
 
 	public void insert(String word) {
 		Node currNode = root;
-		for (int i = 0; i < word.length(); i++) {
-			char currChar = word.charAt(i);
-			// we found the char and advance
-			if (currNode.childrenNodes.containsKey(currChar)) {
-				currNode = currNode.childrenNodes.get(currChar);
-			}
-			// we don't find the char, creating a new one and advance
-			else {
-				Node newNode = new Node(currChar);
-				currNode.childrenNodes.put(currChar, newNode);
-				currNode = newNode;
-			}
-
-			if (i == word.length() - 1) {
-				currNode.isWord = true;
-			}
+		for (char currChar : word.toCharArray()) {
+			// insert the character if we dont find it
+			currNode.childrenNodes.putIfAbsent(currChar, new Node(currChar));
+			// advance currNode
+			currNode = currNode.childrenNodes.get(currChar);
 		}
+		currNode.isWord = true;
 	}
 
 	public boolean search(String word) {
@@ -78,12 +68,12 @@ public class PrefixTree {
 
 		prefixTree.insert("doge");
 		prefixTree.insert("doll");
-		System.out.println(prefixTree.search("dog"));
-		System.out.println(prefixTree.search("do"));
-		System.out.println(prefixTree.search("doll"));
-		System.out.println(prefixTree.search("doge"));
+		System.out.println(prefixTree.search("dog"));// true
+		System.out.println(prefixTree.search("do"));//false
+		System.out.println(prefixTree.search("doll"));//true
+		System.out.println(prefixTree.search("doge"));//true
 		prefixTree.insert("do");
-		System.out.println(prefixTree.search("do"));
-		System.out.println(prefixTree.startsWith("dod"));
+		System.out.println(prefixTree.search("do"));//true
+		System.out.println(prefixTree.startsWith("dod"));//false
 	}
 }
