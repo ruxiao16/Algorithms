@@ -9,7 +9,7 @@ import java.util.Queue;
 
 public class ConnectedComponents {
 
-	// brute force solution, first construct a adj matrix
+	// brute force solution, first construct an adj matrix
 	// If we start DFS from an unvisited node, we will visit all nodes in its connected component
 	// Every time we start DFS from a new unvisited node, we’ve found one new component
 	public int countComponents(int n, int[][] edges) {

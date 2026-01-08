@@ -53,4 +53,16 @@ public class ConnectedComponentsDSU {
 		}
 		return res;
 	}
+
+	public static void main(String[] args) {
+		ConnectedComponentsDSU driver = new ConnectedComponentsDSU();
+
+		// two componets
+		int[][] edges1 = {
+				{0, 1},
+				{1, 2},
+				{3, 4}
+		};
+		System.out.println(driver.countComponents(5, edges1));
+	}
 }

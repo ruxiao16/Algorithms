@@ -27,7 +27,7 @@ public class ValidTree {
 			return false;
 		}
 
-		// not a single component
+		// not a single component, not connected
 		if (visited.size() != n) {
 			return false;
 		}
@@ -42,6 +42,7 @@ public class ValidTree {
 		visited.add(cur);
 
 		for (int neighbor : adjList.get(cur)) {
+			// skip the parent node to avoid revisiting it
 			if (neighbor == prev) {
 				continue;
 			}
