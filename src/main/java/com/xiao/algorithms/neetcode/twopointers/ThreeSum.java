@@ -28,6 +28,7 @@ public class ThreeSum {
 	}
 
 	// two pointer solution -> sort (n)log(n), two pointers -> n^2 nlogn + n^2 = n^2
+	// The idea is similar to two sum with two pointers solution, except we check the subset once the first number is selected
 	public List<List<Integer>> threeSum(int[] nums) {
 		Arrays.sort(nums);
 		List<List<Integer>> res = new ArrayList<>();
