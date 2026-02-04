@@ -1,7 +1,7 @@
 package com.xiao.algorithms.neetcode.graph;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class NumberOfIslands {
 
@@ -16,8 +16,7 @@ public class NumberOfIslands {
 	// idea, use bfs, mark nodes as they are visited
 
 	private boolean[][] visited;
-	private Deque<Integer> rowQueue;
-	private Deque<Integer> colQueue;
+	private Queue<int[]> queue;
 	// represent up down right and left
 	private static int[] dr = {-1, 1, 0, 0};
 	private static int[] dc = {0, 0, 1, -1};
@@ -33,64 +32,51 @@ public class NumberOfIslands {
 		visited = new boolean[numOfRows][numOfCols];
 		numberOfIsland = 0;
 		//bfs
-//		rowQueue = new ArrayDeque<>();
-//		colQueue = new ArrayDeque<>();
-//
-//		for (int i = 0; i < numOfRows; i++) {
-//			for (int j = 0; j < numOfCols; j++) {
-//				bfs(i, j, grid);
-//			}
-//		}
+		queue = new LinkedList<>();
 
-		//dfs
 		for (int i = 0; i < numOfRows; i++) {
 			for (int j = 0; j < numOfCols; j++) {
-				if (grid[i][j] == '1' && !visited[i][j]) {
+				if (!visited[i][j] && grid[i][j] == '1') {
+					bfs(i, j, grid);
 					numberOfIsland++;
-					dfs(i, j, grid);
 				}
 			}
 		}
+
+		//dfs
+//		for (int i = 0; i < numOfRows; i++) {
+//			for (int j = 0; j < numOfCols; j++) {
+//				if (grid[i][j] == '1' && !visited[i][j]) {
+//					numberOfIsland++;
+//					dfs(i, j, grid);
+//				}
+//			}
+//		}
 		return numberOfIsland;
 	}
 
-
 	private void bfs(int startRow, int startCol, char[][] grid) {
-		if (grid[startRow][startCol] == '0') {
-			return;
-		}
-
-		if (visited[startRow][startCol]){
-			return;
-		}
-
-		// otherwise a new node with land mass
 		visited[startRow][startCol] = true;
-		rowQueue.add(startRow);
-		colQueue.add(startCol);
 
-		while(!rowQueue.isEmpty()) {
-			int row = rowQueue.pop();
-			int col = colQueue.pop();
+		queue.add(new int[]{startRow, startCol});
+
+		while(!queue.isEmpty()) {
+			int[] coordinates = queue.poll();
 			int newRow;
 			int newCol;
 
 			for (int i = 0; i < 4; i++) {
-				newRow = row + dr[i];
-				newCol = col + dc[i];
+				newRow = coordinates[0] + dr[i];
+				newCol = coordinates[1] + dc[i];
 
-				if(newRow <0 || newCol < 0) continue;
-				if(newRow >= numOfRows || newCol >= numOfCols) continue;
-				if(grid[newRow][newCol] == '0') continue; // this is probably unnecessary
+				if(newRow <0 || newCol < 0 || newRow >= numOfRows || newCol >= numOfCols) continue;
+				if(grid[newRow][newCol] == '0') continue;
 				if(visited[newRow][newCol]) continue;
 
 				visited[newRow][newCol] = true;
-				rowQueue.add(newRow);
-				colQueue.add(newCol);
+				queue.add(new int[]{newRow, newCol});
 			}
 		}
-		// in each iteration of bfs, we can guarantee that the whole island is visited
-		numberOfIsland++;
 	}
 
 	// the purpose of dfs is just to mark nodes as visited

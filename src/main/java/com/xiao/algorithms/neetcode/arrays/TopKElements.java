@@ -10,8 +10,8 @@ import java.util.Set;
 public class TopKElements {
 	// taken [1,1,1,2,2,3,4,4] as an example,
 	// we will have freq array of
-	// indices -> 0    1     2      3    4    5  6   7   8
-	//           [[], [3], [2,4],  [1],  [], [], [], [], []]
+	// indices -> 0    1     2      3
+	//           [[], [3], [2,4],  [1]]
 	public int[] topKFrequent(int[] nums, int k) {
 		Map<Integer, Integer> count = new HashMap<>();
 		//we need to add 1 here is that say we have an input of
